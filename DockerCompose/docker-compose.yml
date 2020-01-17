@@ -1,0 +1,37 @@
+version: '3.4'
+
+services:
+  hogewebapi:
+    image: ${DOCKER_REGISTRY-}hogewebapi
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+    build:
+      context: ..
+      dockerfile: HogeWebApi/Dockerfile
+    container_name: hogewebapi
+    ports:
+      - "80"
+      - "443"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+    networks:
+      - private_net
+
+  localdynamodb:
+    build:
+      context: ./localdynamodb
+    container_name: localdynamodb
+    ports:
+      - "8000"
+    volumes:
+      - dynamodb-data:/data
+    networks:
+      - private_net
+
+networks:
+  private_net:
+
+volumes:
+  dynamodb-data:
