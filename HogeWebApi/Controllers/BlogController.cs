@@ -12,7 +12,7 @@ using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DataModel;
 using Amazon.DynamoDBv2.Model;
 
-namespace IchibanWebAPI.Controllers {
+namespace HogeWebApi.Controllers {
     [Route("blog")]
     [ApiController]
     public class BlogController : ControllerBase {
